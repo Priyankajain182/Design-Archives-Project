@@ -1,0 +1,240 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vatan Textiles</title>
+    <meta name="description" content="Library Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/flag-icon.min.css">
+    <link rel="stylesheet" href="css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="scss/style.css">
+    <link href="css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+</head>
+
+<body>
+
+
+    <!-- Left Panel -->
+
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu"
+                    aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="./"><img src="images/square.jpg" alt="Logo"></a>
+                <a class="navbar-brand hidden" href="./"><img src="#" alt="Logo"></a>
+            </div>
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="dashboard.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard</a>
+                    </li>
+                    <h3 class="menu-title">Design Archives</h3><!-- /.menu-title -->                    
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="menu-icon fa fa-table"></i>Designs</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-table"></i><a href="view.html">View</a></li>
+                            <li><i class="fa fa-table"></i><a href="add.html">Add</a></li>
+                        </ul>
+                    </li>
+                    <!-- /.menu-title -->
+                    <li>
+                        <a href="barcode.html"> <i class="fa fa-barcode"></i>Barcode </a>
+                    </li>                    
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside><!-- /#left-panel -->
+
+    <!-- Left Panel -->
+
+    <!-- Right Panel -->
+
+
+    <div id="right-panel" class="right-panel">
+        <!-- /header -->
+        <!-- Header-->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content mt-3">
+            <div class="col-sm-6 col-lg-3">
+                <div class="">
+                    <div class="card-body pb-0">
+                        
+                        <p class="text-light" id="bookcount">
+
+                        </p>
+
+                        <div class="chart-wrapper px-0" style="height:0px;" height="0">
+                            <canvas id="widgetChart1"></canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-6 col-lg-6">
+                <div class="card text-white bg-flat-color-2">
+                    <div class="card-body pb-0">
+                        <h4 class="mb-0">
+                            Total Number of Designs
+                        </h4>
+                        <p class="text-light" id="usercount">
+
+                        </p>
+
+                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
+                            <canvas id="widgetChart2"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+
+            
+
+        </div> <!-- .content -->
+        <!---MOnnthly report --->
+
+        
+
+        <script>
+            window.$ = window.jQuery = require('./js/vendor/jquery-2.1.4.min.js');
+        </script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            //book count
+            const database = require('./js/databases');
+            database.bookcount();
+            var bookcount = localStorage.getItem("bookcount");
+            var bookcounthtml = '';
+            bookcounthtml += ' <span class="count">' + bookcount + '</span>'
+            document.getElementById('bookcount').innerHTML = bookcounthtml;
+            //user count
+            database.usercount();
+            var usercount = localStorage.getItem("usercount");
+            var usercounhtmlt = '';
+            usercounhtmlt += ' <span class="count">' + usercount + '</span>'
+            document.getElementById('usercount').innerHTML = usercounhtmlt;
+            //test1dbcount
+            database.test1dbcount();
+            var test1dbcount = localStorage.getItem("test1db");
+            //console.log(test1dbcount);
+            var test1dbcounhtmlt = '';
+            test1dbcounhtmlt += ' <span class="count">' + test1dbcount + '</span>'
+            document.getElementById('test1dbcount').innerHTML = test1dbcounhtmlt;
+            //free book count
+            var freebook = bookcount - test1dbcount;
+            var freebookhtm = '';
+            freebookhtm += '<span class="count">' + freebook + '</span>'
+            document.getElementById('freebook').innerHTML = freebook;
+
+            database.gettest1db(function (testdb) {
+                var date = new Date();
+                var month = date.getMonth();
+                var month = month + 1;
+                var monthh = '-' + month + '-';
+                console.log(month);
+                //console.log(monthh);
+                var tablebody = '';
+                for (i = 0; i < testdb.length; i++) {
+                    /*  if(testdb[i].today.includes(monthh)){
+                          console.log('true');
+                     tablebody+= '<tr>';
+                     tablebody+= '<td>' + testdb[i].bookid + '</td>';
+                     tablebody+= '<td>' + testdb[i].designid + '</td>';
+                     tablebody+= '<td>' + testdb[i].today + '</td>';
+                     tablebody+= '</tr>';
+                     document.getElementById("tablebody").innerHTML=tablebody; 
+                     }*/
+                    //console.log(testdb[i].bookid);
+                    // var fix = testdb[i].today;
+                    // console.log(fix.contains(monthh));
+                    //var finalfix= fix.includes(monthh, 3);
+                    //console.log(fix.indexOf("-10-"));
+                    //
+                    var fix = String(testdb[i].renew_date);
+                    console.log(fix);
+
+                    function findNewProgrammingLanguage(language) {
+
+                        if (fix.indexOf(monthh) >= 0) {
+                            tablebody += '<tr>';
+                            tablebody += '<td>' + testdb[i].bookid + '</td>';
+                            tablebody += '<td>' + testdb[i].designid + '</td>';
+                            tablebody += '<td>' + testdb[i].renew_date + '</td>';
+                            tablebody += '</tr>';
+                            document.getElementById("tablebody").innerHTML = tablebody;
+
+
+                        } else {
+
+                            // console.log(language + "is not current month");
+
+                        }
+
+                    }
+
+
+                    findNewProgrammingLanguage(monthh);
+                    //
+                }
+            });
+        </script>
+
+        <script src="js/lib/chart-js/Chart.bundle.js"></script>
+        <script src="js/dashboard.js"></script>
+        <script src="js/widgets.js"></script>
+        <script src="js/lib/vector-map/jquery.vmap.js"></script>
+        <script src="js/lib/vector-map/jquery.vmap.min.js"></script>
+        <script src="js/lib/vector-map/jquery.vmap.sampledata.js"></script>
+        <script src="js/lib/vector-map/country/jquery.vmap.world.js"></script>
+        <script>
+            (function ($) {
+                "use strict";
+
+                jQuery('#vmap').vectorMap({
+                    map: 'world_en',
+                    backgroundColor: null,
+                    color: '#ffffff',
+                    hoverOpacity: 0.7,
+                    selectedColor: '#1de9b6',
+                    enableZoom: true,
+                    showTooltip: true,
+                    values: sample_data,
+                    scaleColors: ['#1de9b6', '#03a9f5'],
+                    normalizeFunction: 'polynomial'
+                });
+            })(jQuery);
+        </script>
+
+</body>
+
+</html>

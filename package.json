@@ -1,0 +1,32 @@
+{
+  "name": "Design-Archives",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "npm install && electron .",
+    "pack": "build --dir",
+    "build": "electron-packager . designs --platform win32 --arch x64 --out dist/",
+    "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.4.8",
+    "electron-builder": "^20.38.5",
+    "electron-installer-windows": "^1.1.0",
+    "electron-packager": "^13.0.1"
+  },
+  "dependencies": {
+    "datatables.net-dt": "^1.10.19",
+    "decompress-zip": "^0.2.2",
+    "electron-package": "^0.1.0",
+    "jquery": "^3.3.1",
+    "jspdf": "^1.5.3",
+    "jspdf-autotable": "^2.3.5",
+    "nedb": "^1.8.0",
+    "nodemailer": "^4.7.0",
+    "nodemailer-smtp-transport": "^2.7.4"
+  }
+}
